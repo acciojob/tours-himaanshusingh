@@ -1,7 +1,7 @@
 import React from "react";
 import Tour from "./Tour";
 
-function Tours({ tours, removeTour }) {
+const Tours = ({ tours, removeTour }) => {
   return (
     <section>
       <div className="title">
@@ -15,6 +15,6 @@ function Tours({ tours, removeTour }) {
       </div>
     </section>
   );
-}
+};
 
 export default Tours;

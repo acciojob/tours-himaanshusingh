@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Loading from "./Loading";
 import Tours from "./Tours";
+import "./../styles/App.css";
 
 const url = "https://www.course-api.com/react-tours-project";
 
-function App() {
+const App = () => {
   const [loading, setLoading] = useState(true);
   const [tours, setTours] = useState([]);
 
-  const fetchTours = () => {
+  function fetchTours() {
     setLoading(true);
-
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -21,15 +21,15 @@ function App() {
         console.error("Error fetching tours:", error);
         setLoading(false);
       });
-  };
+  }
 
   useEffect(() => {
     fetchTours();
   }, []);
 
-  const removeTour = (id) => {
+  function removeTour(id) {
     setTours((prevTours) => prevTours.filter((tour) => tour.id !== id));
-  };
+  }
 
   if (loading) {
     return (
@@ -55,6 +55,6 @@ function App() {
       <Tours tours={tours} removeTour={removeTour} />
     </main>
   );
-}
+};
 
 export default App;

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
-function Tour({ id, image, info, price, name, removeTour }) {
+const Tour = ({ id, image, info, price, name, removeTour }) => {
   const [showMore, setShowMore] = useState(false);
-
   const text = showMore ? info : `${info.substring(0, 200)}...`;
 
   return (
@@ -34,6 +33,6 @@ function Tour({ id, image, info, price, name, removeTour }) {
       </footer>
     </article>
   );
-}
+};
 
 export default Tour;
