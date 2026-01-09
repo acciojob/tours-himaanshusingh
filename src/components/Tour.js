@@ -4,7 +4,7 @@ import { Store } from "./App";
 const Tour = ({ tour }) => {
   const [tours, setTours] = useContext(Store);
   const [fullInfo, setFullInfo] = useState(false);
-  const { name, info, image, price } = tour;
+  const { id, name, info, image, price } = tour;
   const shortInfo = info.split(" ").slice(0, 10).join(" ") + "...";
 
   function toggleInfo() {
@@ -18,11 +18,11 @@ const Tour = ({ tour }) => {
   return (
     <div>
       <h1>{name}</h1>
-      <img src={image} alt="img-1" />
-      <h2>${price}</h2>
-      <p>{!fullInfo ? shortInfo : info }</p>
-      <button onClick={toggleInfo}>{!fullInfo ? "Show More" : "See Less" }</button>
-      <button onClick={handleClick}>Remove</button>
+      <img src={image} alt="img-1" className="tour-img" />
+      <h2 className="tour-price">${price}</h2>
+      <p id={`tour-item-para-${id}`}>{!fullInfo ? shortInfo : info }</p>
+      <button id={`see-more-${id}`} onClick={toggleInfo}>{!fullInfo ? "Show More" : "See Less" }</button>
+      <button id={`delete-btn-${id}`} onClick={handleClick}>Remove</button>
     </div>
   ); // prettier-ignore
 };
