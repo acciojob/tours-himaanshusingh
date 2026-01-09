@@ -21,7 +21,7 @@ const Tour = ({ tour }) => {
       <img src={image} alt="img-1" className="tour-img" />
       <h2 className="tour-price">${price}</h2>
       <p id={`tour-item-para-${id}`}>{!fullInfo ? shortInfo : info }</p>
-      <button id={`see-more-${id}`} onClick={toggleInfo}>{!fullInfo ? "See More" : "See Less" }</button>
+      <button id={`see-more-${id}`} onClick={toggleInfo}>{!fullInfo ? "See more" : "Show less" }</button>
       <button id={`delete-btn-${id}`} onClick={handleClick}>Remove</button>
     </div>
   ); // prettier-ignore
