@@ -1,19 +1,35 @@
-import React from "react";
+import React, { useContext } from "react";
 import Tour from "./Tour";
+import { Store } from "./App";
 
-const Tours = ({ tours, removeTour }) => {
+const Tours = () => {
+  const [tours, setTours, api, setIsLoading] = useContext(Store);
+
+  function handleClick() {
+    setIsLoading(true);
+    (async function () {
+      const data = await fetch(api);
+      const toursData = await data.json();
+      setTours(toursData);
+      setIsLoading(false);
+    })();
+  }
+
   return (
-    <section>
-      <div className="title">
-        <h2>Our Tours</h2>
-        <div className="underline"></div>
-      </div>
-      <div>
-        {tours.map((tour) => (
-          <Tour key={tour.id} {...tour} removeTour={removeTour} />
-        ))}
-      </div>
-    </section>
+    <div className="tours-container">
+      {tours.length > 0 ? (
+        tours.map((tour) => (
+          <div className="tour">
+            <Tour key={tour.id} tour={tour} />
+          </div>
+        ))
+      ) : (
+        <div>
+          <h1>"No more tours"</h1>
+          <button onClick={handleClick}>Refresh</button>
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -1,38 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Store } from "./App";
 
-const Tour = ({ id, image, info, price, name, removeTour }) => {
-  const [showMore, setShowMore] = useState(false);
-  const text = showMore ? info : `${info.substring(0, 200)}...`;
+const Tour = ({ tour }) => {
+  const [tours, setTours] = useContext(Store);
+  const [fullInfo, setFullInfo] = useState(false);
+  const { name, info, image, price } = tour;
+  const shortInfo = info.split(" ").slice(0, 10).join(" ") + "...";
+
+  function toggleInfo() {
+    setFullInfo(!fullInfo);
+  }
+
+  function handleClick() {
+    setTours(tours.filter((tour) => tour.name != name));
+  }
 
   return (
-    <article className="single-tour">
-      <img src={image} alt={name} className="tour-img" />
-      <footer>
-        <div className="tour-info">
-          <h4>{name}</h4>
-          <h4 className="tour-price">${price}</h4>
-        </div>
-
-        <p id={`tour-item-para-${id}`}>
-          {text}
-          <button
-            id={`see-more-${id}`}
-            onClick={() => setShowMore((prev) => !prev)}
-          >
-            {showMore ? "Show less" : "See more"}
-          </button>
-        </p>
-
-        <button
-          id={`delete-btn-${id}`}
-          className="btn-remove"
-          onClick={() => removeTour(id)}
-        >
-          Remove
-        </button>
-      </footer>
-    </article>
-  );
+    <div>
+      <h1>{name}</h1>
+      <img src={image} alt="img-1" />
+      <h2>${price}</h2>
+      <p>{!fullInfo ? shortInfo : info }</p>
+      <button onClick={toggleInfo}>{!fullInfo ? "Show More" : "See Less" }</button>
+      <button onClick={handleClick}>Remove</button>
+    </div>
+  ); // prettier-ignore
 };
 
 export default Tour;

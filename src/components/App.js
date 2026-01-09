@@ -1,59 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
+import "../styles/App.css";
 import Loading from "./Loading";
 import Tours from "./Tours";
-import "./../styles/App.css";
+import "regenerator-runtime/runtime";
 
-const url = "https://www.course-api.com/react-tours-project";
+const api = "https://www.course-api.com/react-tours-project";
+export const Store = createContext();
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [tours, setTours] = useState([]);
 
-  function fetchTours() {
-    setLoading(true);
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        setTours(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching tours:", error);
-        setLoading(false);
-      });
-  }
-
   useEffect(() => {
-    fetchTours();
+    (async function () {
+      const data = await fetch(api);
+      const toursData = await data.json();
+      setTours(toursData);
+      setIsLoading(false);
+    })();
   }, []);
 
-  function removeTour(id) {
-    setTours((prevTours) => prevTours.filter((tour) => tour.id !== id));
-  }
-
-  if (loading) {
-    return (
-      <main id="main">
-        <Loading />
-      </main>
-    );
-  }
-
-  if (tours.length === 0) {
-    return (
-      <main id="main" className="no-tours">
-        <h2>No tours left</h2>
-        <button className="btn-refresh" onClick={fetchTours}>
-          Refresh
-        </button>
-      </main>
-    );
-  }
-
   return (
-    <main id="main">
-      <Tours tours={tours} removeTour={removeTour} />
-    </main>
+    <Store.Provider value={[tours, setTours, api, setIsLoading]}>
+      <div id="main">{isLoading ? <Loading /> : <Tours />}</div>
+    </Store.Provider>
   );
 };
 
