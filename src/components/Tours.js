@@ -19,8 +19,8 @@ const Tours = () => {
     <div className="tours-container">
       {tours.length > 0 ? (
         tours.map((tour) => (
-          <div className="tour">
-            <Tour key={tour.id} tour={tour} />
+          <div key={tour.id} className="tour">
+            <Tour tour={tour} />
           </div>
         ))
       ) : (
